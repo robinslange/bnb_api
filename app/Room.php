@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Review extends Model
+class Room extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'id', 'room_id', 'customer_id', 'booking_id', 'rating', 'review'
+        'id', 'roomname', 'description', 'roomtype', 'beds'
     ];
 
     protected $hidden = [];

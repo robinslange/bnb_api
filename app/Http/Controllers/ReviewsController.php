@@ -32,12 +32,17 @@ class ReviewsController extends Controller
         $reviews = review::where('room_id', $id)->get();
         return response()->json($reviews, 200);
     }
+    public function getBookingReviews($id) 
+    {
+        $reviews = review::where('booking_id', $id)->get();
+        return response()->json($reviews, 200);
+    }
     public function create(Request $request) 
     {
         $this->validate($request, [
-            'id' => DEFAULT_ID,
             'room_id' => 'required',
             'customer_id' => 'required',
+            'booking_id' => 'required',
             'review' => 'required|string|max:500',
             'rating' => 'required|int'
         ]);
@@ -48,7 +53,6 @@ class ReviewsController extends Controller
     public function update($id, Request $request) 
     {
         $this->validate($request, [
-            'id' => DEFAULT_ID,
             'room_id' => 'required',
             'customer_id' => 'required',
             'review' => 'required|string|max:500',
@@ -60,7 +64,7 @@ class ReviewsController extends Controller
 
         return response()->json($Review, 200);
     }
-    public function deleteReview($id) 
+    public function delete($id) 
     {
         review::findorFail($id)->delete();
         return response('Deleted Succesfully!', 200);

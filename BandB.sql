@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS booking (
   customerID int unsigned NOT NULL,
   checkinDate datetime NOT NULL,
   checkoutDate datetime NOT NULL,
-  PRIMARY KEY (bookingID)
+  PRIMARY KEY (bookingID),
   FOREIGN KEY (roomID) REFERENCES room(roomID) ON UPDATE CASCADE,
-  FOREIGN KEY (customerID) REFERENCES customer(customerID) ON UPDATE CASCADE,
+  FOREIGN KEY (customerID) REFERENCES customer(customerID) ON UPDATE CASCADE
 ) AUTO_INCREMENT=1;
 
 -- I feel as though for a bookings table we should have reviews linked, this should be a separate table so as to avoid cluttering up the bookings table
@@ -76,4 +76,19 @@ INSERT INTO booking (bookingID, roomID, customerID, checkinDate, checkoutDate) V
 (2, 4, 12, '2021-04-10', '2021-05-05'),
 (3, 10, 4, '2021-05-12', '2021-05-17')
 (4, 20, 8, '2021-05-12', '2021-05-17')
+
+
+DROP TABLE IF EXISTS reviews;
+CREATE TABLE IF NOT EXISTS reviews (
+  id int unsigned NOT NULL auto_increment,
+  room_id int unsigned NOT NULL,
+  customer_id int unsigned NOT NULL,
+  booking_id int unsigned NOT NULL,
+  review varchar(500) NOT NULL,
+  rating int unsigned NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (room_id) REFERENCES rooms(id) ON UPDATE CASCADE,
+  FOREIGN KEY (customer_id) REFERENCES customers(id) ON UPDATE CASCADE,
+  FOREIGN KEY (booking_id) references bookings(id) ON UPDATE CASCADE
+) AUTO_INCREMENT=1;
 

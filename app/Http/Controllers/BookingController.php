@@ -53,7 +53,7 @@ class BookingController extends Controller
 
         return response()->json($booking, 200);
     }
-    public function deleteBooking($id) 
+    public function delete($id) 
     {
         Booking::findorFail($id)->delete();
         return response('Deleted Succesfully!', 200);

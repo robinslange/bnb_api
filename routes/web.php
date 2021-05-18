@@ -28,6 +28,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('bookings', ['uses' => 'BookingController@create']);
     $router->delete('bookings/{id}', ['uses' => 'BookingController@delete']);
     $router->put('bookings/{id}', ['uses' => 'BookingController@update']);
+    $router->post('/bookings/checkAvailable', ['uses' => 'BookingController@checkAvailable']);
 
     //reviews
     $router->get('reviews', ['uses' => 'ReviewsController@getAllReviews']);
@@ -36,6 +37,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('reviews', ['uses' => 'ReviewsController@create']);
     $router->delete('reviews/{id}', ['uses' => 'ReviewsController@delete']);
     $router->put('reviews/{id}', ['uses' => 'ReviewsController@update']);
+
+    //rooms
+    $router->get('rooms', ['uses' => 'RoomsController@getRooms']);
+    // $router->post('rooms/checkAvailable', ['uses' => 'AvailabilityController@checkAvailable']);
+    // i wasn't able to figure out how to convert the given query into a Lumen useable query :(
+
 });
 
 // $router->get('bookings/')
