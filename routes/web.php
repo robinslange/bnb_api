@@ -31,7 +31,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     //reviews
     $router->get('reviews', ['uses' => 'ReviewsController@getAllReviews']);
-    $router->get('reviews/{id}', ['uses' => 'ReviewsController@getRooking']);
+    $router->get('reviews/{id}', ['uses' => 'ReviewsController@getReview']);
+    $router->get('reviews/room/{id}', ['uses' => 'ReviewsController@getRoomReviews']);
     $router->post('reviews', ['uses' => 'ReviewsController@create']);
     $router->delete('reviews/{id}', ['uses' => 'ReviewsController@delete']);
     $router->put('reviews/{id}', ['uses' => 'ReviewsController@update']);

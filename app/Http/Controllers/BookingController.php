@@ -29,12 +29,25 @@ class BookingController extends Controller
     }
     public function create(Request $request) 
     {
+        $this->validate($request, [
+            'room_id' => 'required',
+            'customer_id' => 'required',
+            'checkinDate' => 'required|date',
+            'checkoutDate' => 'required|date'
+        ]);
         $booking = Booking::create($request->all());
 
         return response()->json($booking, 201);
     }
     public function update($id, Request $request) 
     {
+        $this->validate($request, [
+            'room_id' => 'required',
+            'customer_id' => 'required',
+            'checkinDate' => 'required|date',
+            'checkoutDate' => 'required|date'
+        ]);
+
         $booking = Booking::findorFail($id);
         $booking->update($request->all());
 

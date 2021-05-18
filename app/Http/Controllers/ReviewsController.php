@@ -14,28 +14,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Review
+use App\Review;
 use Illuminate\Http\Request;
 
 class ReviewsController extends Controller
 {
-    public function getAllReviews($roomid)
+    public function getAllReviews()
     {
-        $review = review::findorFail($roomid);
-        return $review
+        return response()->json(review::all());
     }
     public function getReview($id) 
     {
         return response()->json(review::find($id));
     }
+    public function getRoomReviews($id) 
+    {
+        $reviews = review::where('room_id', $id)->get();
+        return response()->json($reviews, 200);
+    }
     public function create(Request $request) 
     {
+        $this->validate($request, [
+            'id' => DEFAULT_ID,
+            'room_id' => 'required',
+            'customer_id' => 'required',
+            'review' => 'required|string|max:500',
+            'rating' => 'required|int'
+        ]);
         $Review = review::create($request->all());
 
         return response()->json($Review, 201);
     }
     public function update($id, Request $request) 
     {
+        $this->validate($request, [
+            'id' => DEFAULT_ID,
+            'room_id' => 'required',
+            'customer_id' => 'required',
+            'review' => 'required|string|max:500',
+            'rating' => 'required|int'
+        ]);
+
         $Review = review::findorFail($id);
         $Review->update($request->all());
 
@@ -44,6 +63,6 @@ class ReviewsController extends Controller
     public function deleteReview($id) 
     {
         review::findorFail($id)->delete();
-        return response('Deleted Succesfully!', 200)
+        return response('Deleted Succesfully!', 200);
     }
 }
