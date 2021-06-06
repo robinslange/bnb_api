@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 use Illuminate\Http\Response;
@@ -21,7 +22,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    
+
     //bookings
     $router->get('bookings', ['uses' => 'BookingController@getAllBookings']);
     $router->get('bookings/{id}', ['uses' => 'BookingController@getBooking']);
@@ -29,6 +30,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('bookings/{id}', ['uses' => 'BookingController@delete']);
     $router->put('bookings/{id}', ['uses' => 'BookingController@update']);
     $router->post('/bookings/checkAvailable', ['uses' => 'BookingController@checkAvailable']);
+    $router->get('bookings/customer/${id}', ['uses' => 'BookingController@getCustomerBookings']);
 
     //reviews
     $router->get('reviews', ['uses' => 'ReviewsController@getAllReviews']);
@@ -43,6 +45,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // $router->post('rooms/checkAvailable', ['uses' => 'AvailabilityController@checkAvailable']);
     // i wasn't able to figure out how to convert the given query into a Lumen useable query :(
 
+    $router->post('user/register', ['uses' => 'CustomerController@register']);
+    $router->post('user/login', ['uses' => 'CustomerController@login']);
 });
 
 // $router->get('bookings/')

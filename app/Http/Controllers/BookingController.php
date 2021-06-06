@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -23,11 +24,16 @@ class BookingController extends Controller
     {
         return response()->json(booking::all());
     }
-    public function getBooking($id) 
+    public function getBooking($id)
     {
         return response()->json(booking::find($id));
     }
-    public function create(Request $request) 
+    public function getCustomerBookings($id)
+    {
+        $bookings = Booking::select('SELECT * FROM BOOKING WHERE customer_id = ?', array($id));
+        return response()->json($bookings, 200);
+    }
+    public function create(Request $request)
     {
         $this->validate($request, [
             'room_id' => 'required',
@@ -39,7 +45,7 @@ class BookingController extends Controller
 
         return response()->json($booking, 201);
     }
-    public function update($id, Request $request) 
+    public function update($id, Request $request)
     {
         $this->validate($request, [
             'room_id' => 'required',
@@ -53,7 +59,7 @@ class BookingController extends Controller
 
         return response()->json($booking, 200);
     }
-    public function delete($id) 
+    public function delete($id)
     {
         Booking::findorFail($id)->delete();
         return response('Deleted Succesfully!', 200);
